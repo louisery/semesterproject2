@@ -21,8 +21,10 @@ h1, h3 {
 }
 
 h2 {
-  font-family: priori-sans, sans-serif;
-  font-size: 1.5em;
+  font-family: trajan-pro-3, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.9em;
 }
 
 
@@ -93,22 +95,26 @@ h2 {
 /* Buttons */
 
 #btn_play {
+  font-family: trajan-pro-3, serif;
+  font-weight: 400;
+  font-style: normal;
   background-color: #FFFF19;
-  text-transform: uppercase;
   font-weight: 600;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
 }
 
+/*
 #btn_play:hover {
   background-color: #B21917;
   color: #ffffff;
 }
+*/
 
 .expand:hover {
-  -webkit-transform: scale(1.3);
-  -ms-transform: scale(1.3);
-  transform: scale(1.3);
+  -webkit-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 /* Home Page - text */
