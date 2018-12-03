@@ -11,15 +11,15 @@ function init() {
 		infoPlayer1: {},
 		infoPlayer2: {},
 		traps: {
-			5: { trapInfo: "You lost in a sword fight against Brienne of Tarth, go back two spaces.", backwardsValue: 2 },
-			10: { trapInfo: "The Mountain is blocking the road ahead, go back three spaces.", backwardsValue: 3 },
-			15: { trapInfo: "You did not manage to solve Lord Varys’ riddle, go back two spaces.", backwardsValue: 2 },
-			20: { trapInfo: "You trusted Little Finger, that was not smart, go back four spaces.", backwardsValue: 4 },
-			25: { trapInfo: "Grand Maester Pycelle poisoned you, go back three spaces.", backwardsValue: 3 }
+			5: { trapInfo: 'You lost in a sword fight against Brienne of Tarth, go back two spaces.', backwardsValue: 2 },
+			10: { trapInfo: 'The Mountain is blocking the road ahead, go back three spaces.', backwardsValue: 3 },
+			15: { trapInfo: 'You did not manage to solve Lord Varys’ riddle, go back two spaces.', backwardsValue: 2 },
+			20: { trapInfo: 'You trusted Little Finger, that was not smart, go back four spaces.', backwardsValue: 4 },
+			25: { trapInfo: 'Grand Maester Pycelle poisoned you, go back three spaces.', backwardsValue: 3 }
 		},
-		nextPlayer: "player1",
+		nextPlayer: 'player1',
 		lastDiceRoll: 0,
-		gameStage: "LOADING", // LOADING, CHARACTER_SELECT, GAME, FINALE
+		gameStage: 'LOADING', // LOADING, CHARACTER_SELECT, GAME, FINALE
 	}
 }
 
@@ -32,11 +32,21 @@ function loadCharacters() {
 
 	Promisa.all(characterInfoRetrieval).then(characters => {
 		state.availableCharacters = characters;
-		state.gameStage = "CHARACTER_SELECT";
+		state.gameStage = 'CHARACTER_SELECT';
 
 		render(state);
 	});
 }
+
+/* Loading state while waiting for api info to appear */
+
+function renderLoading(state) {
+    let el = document.getElementById('game');
+    el.innerHTML = "<h2>Loading...</h2>";
+}
+
+/* Character select */
+
 
 /* Character Cards */
 function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Function) {
@@ -69,10 +79,10 @@ function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Fun
 
     var player1Button = document.createElement('button')
     var player2Button = document.createElement('button')
-    player1Button.addEventListener("click", (e) => selectPlayer1Function(resultItem))
-    player1Button.innerText = "Select as player 1";
-    player2Button.addEventListener("click", (e) => selectPlayer2Function(resultItem))
-    player2Button.innerText = "Select as player 2";
+    player1Button.addEventListener('click', (e) => selectPlayer1Function(resultItem))
+    player1Button.innerText = 'Select as player 1';
+    player2Button.addEventListener('click', (e) => selectPlayer2Function(resultItem))
+    player2Button.innerText = 'Select as player 2';
     wrapper.appendChild(player1Button);
     wrapper.appendChild(player2Button);
 
