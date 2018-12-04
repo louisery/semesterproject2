@@ -30,7 +30,7 @@ function loadCharacters() {
 
 	let characterInfoRetrieval = characters.map((c) => fetch('https://www.anapioficeandfire.com/api/characters/' + c).then(result => result.json()))
 
-	Promisa.all(characterInfoRetrieval).then(characters => {
+	Promise.all(characterInfoRetrieval).then(characters => {
 		state.availableCharacters = characters;
 		state.gameStage = 'CHARACTER_SELECT';
 
@@ -62,12 +62,14 @@ function renderCharacterSelect(state) {
 	if (Object.keys(state.infoPlayer1).length != 0 && Object.keys(state.infoPlayer2).length != 0) {
 		let playGameBtn = document.createElement('button');
 		playGameBtn.innerHTML = 'Play Game';
-		playGameBtn.addEventListener('click', (e) => {
-			el.appendChild(createCharacterCard(character, selectPlayer1Function, selectPlayer2Function));
-		});
+		playGameBtn.addEventListener('click', (e) => startGameFunction());
+			el.appendChild(playGameBtn);
 	}
-}
 
+	state.availableCharacters.forEach(character => {
+		el.appendChild(createCharacterCard(character, selectPlayer1Function, selectPlayer2Function));
+	});
+}
 
 function renderGame(state) {
 	let el = document.getElementById('game');
@@ -82,12 +84,11 @@ function renderGame(state) {
 
 	// Draw canvas game board
 	for (var x = 0; x < 6; x++) {
-		for (var y = 0; < 5; y++) {
-
+		for (var y = 0; y < 5; y++) {
 			// Every other square is gray/dimgray
 			if (x % 2 === y % 2) {
 				ctx.fillStyle = 'gray';
-				ctx.fillRect(120 * x, 120 * 7, 120, 120);
+				ctx.fillRect(120 * x, 120 * y, 120, 120);
 			} else {
 				ctx.fillStyle = 'dimgray';
 				ctx.fillRect(120 * x, 120 * y, 120, 120);
@@ -107,9 +108,8 @@ function renderGame(state) {
 			if (boardNumber === state.posPlayer2) {
 				// Player 2
 				ctx.fillStyle = 'blue';
-				ctx.fillRect(120 * x, 120 * y, 60, 60);
+				ctx.fillRect(120 * x, (120 * y) + 60, 60, 60);
 			}
-
 		}
 	}
 
