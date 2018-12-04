@@ -1,15 +1,46 @@
 body {
-    background-color: #34465A;
-    color: #ffffff;
+  background-color: #34465A;
+  color: #ffffff;
 }
 
 .characterCard {
-    margin: 10px;
-    padding: 15px;
-    width: 400px;
-    height: 400px;
-    background-color: #175977;
-    color: #ffffff;
-    display: inline-grid;
-    text-align: left;
+  margin: 10px;
+  padding: 15px;
+  width: 400px;
+  height: 400px;
+  background-color: #175977;
+  color: #ffffff;
+  display: inline-grid;
+  text-align: left;
+}
+
+/* Buttons */
+
+button {
+  font-family: trajan-pro-3, serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #FFFF19;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+  margin: 1px;
+}
+
+button:hover {
+  background-color: #B21917;
+  color: #ffffff;
+}
+
+
+/* Dice */
+
+#diceRoller {
+  height: 80px;
+  width: 80px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 60px;
+  text-align: center;
+  margin: 5px;
 }
