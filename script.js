@@ -24,7 +24,6 @@ function init() {
 }
 
 // Fetch characters from API
-
 function loadCharacters() {
 	let characters = ['16', '27', '2024', '1880', '238', '867', '565', '583', '957', '954']
 
@@ -39,7 +38,6 @@ function loadCharacters() {
 }
 
 // Loading state while waiting for api info to appear
-
 function renderLoading(state) {
 	let el = document.getElementById('game');
 	el.innerHTML = "<h2>Loading...</h2>";
@@ -117,6 +115,18 @@ function renderGame(state) {
 		}
 	}
 
+	/*
+	window.onload = function() {
+	    var c = document.getElementById("myCanvas");
+	    var ctx = c.getContext("2d");
+
+			window.onload = function() {
+			var img = document.getElementById('token_castle');
+			ctx.drawImage(img, 60, 60);
+			}
+	}
+	*/
+
 	el.appendChild(canvas);
 }
 
@@ -167,6 +177,7 @@ var dice = {
 	}
 }
 
+//Show the dice
 function showNumber(number) {
 	var diceRoller = document.getElementById("diceRoller");
 	diceRoller.innerHTML = number;
@@ -187,7 +198,7 @@ function rollDiceAndMove() {
 
 		//If the value is not equal to undefined it's a trap
 		if (state.traps[state.posPlayer1] !== undefined) {
-			console.log(state.traps[state.posPlayer1].trapInfo);
+			alert(state.traps[state.posPlayer1].trapInfo);
 			state.posPlayer1 -= state.traps[state.posPlayer1].backwardsValue
 		}
 		//If player1 has reached the max position(30) the Finale page appear
@@ -202,7 +213,7 @@ function rollDiceAndMove() {
 		state.posPlayer2 += state.lastDiceRoll;
 
 		if (state.traps[state.posPlayer2] !== undefined) {
-			console.log(state.traps[state.posPlayer2].trapInfo);
+			alert(state.traps[state.posPlayer2].trapInfo);
 			state.posPlayer2 -= state.traps[state.posPlayer2].backwardsValue
 		}
 
