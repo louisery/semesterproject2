@@ -1,5 +1,5 @@
 
-/* All information about the game */
+// All information about the game
 function init() {
 	loadCharacters();
 
@@ -23,7 +23,7 @@ function init() {
 	}
 }
 
-/* Fetch characters from API */
+// Fetch characters from API
 
 function loadCharacters() {
 	let characters = ['16', '27', '2024', '1880', '238', '867', '565', '583', '957', '954']
@@ -38,14 +38,14 @@ function loadCharacters() {
 	});
 }
 
-/* Loading state while waiting for api info to appear */
+// Loading state while waiting for api info to appear
 
 function renderLoading(state) {
 	let el = document.getElementById('game');
 	el.innerHTML = "<h2>Loading...</h2>";
 }
 
-/* Character select */
+// Character select
 function renderCharacterSelect(state) {
 	let el = document.getElementById('game');
 	el.innerHTML = '';
@@ -58,7 +58,7 @@ function renderCharacterSelect(state) {
 	el.appendChild(p1label);
 	el.appendChild(p2label);
 
-	/* Play Game Button */
+	// Play Game Button
 	if (Object.keys(state.infoPlayer1).length != 0 && Object.keys(state.infoPlayer2).length != 0) {
 		let playGameBtn = document.createElement('button');
 		playGameBtn.innerHTML = 'Play Game';
@@ -68,10 +68,39 @@ function renderCharacterSelect(state) {
 	}
 
 
+	function renderGame(state) {
+		let el = document.getElementById('game');
+		el.innerHTML = '';
+
+		// Canvas
+		let canvas = document.createElement('canvas');
+		canvas.height = 600;
+		canvas.width = 720;
+		canvas.className = 'gameBoard';
+		let ctx = canvas.getContext('2d');
+
+		// Draw canvas game board
+		for (var x = 0; x < 6; x++) {
+			for (var y = 0; < 5; y++) {
+
+				if (x % 2 === y % 2) {
+					ctx.fillStyle = 'gray';
+					ctx.fillRect(120 * x, 120 * 7, 120, 120);
+				} else {
+					ctx.fillStyle = 'dimgray';
+					ctx.fillRect(120 * x, 120 * y, 120, 120);
+				}
+
+
+
+			}
+		}
+	}
+
 }
 
 
-/* Character Cards */
+// Character Cards
 function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Function) {
 	var wrapper = document.createElement('div')
 	var character = document.getElementById('character');
