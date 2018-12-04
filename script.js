@@ -41,50 +41,73 @@ function loadCharacters() {
 /* Loading state while waiting for api info to appear */
 
 function renderLoading(state) {
-    let el = document.getElementById('game');
-    el.innerHTML = "<h2>Loading...</h2>";
+	let el = document.getElementById('game');
+	el.innerHTML = "<h2>Loading...</h2>";
 }
 
 /* Character select */
+function renderCharacterSelect(state) {
+	let el = document.getElementById('game');
+	el.innerHTML = '';
+
+	let selectPlayer1Function = (item) => { state.infoPlayer1 = item; render (state) }
+	let selectPlayer2Function = (item) => { state.infoPlayer2 = item; render (state) }
+
+	let p1label = document.createElement('div');
+	let p2label = document.createElement('div');
+	el.appendChild(p1label);
+	el.appendChild(p2label);
+
+	/* Play Game Button */
+	if (Object.keys(state.infoPlayer1).length != 0 && Object.keys(state.infoPlayer2).length != 0) {
+		let playGameBtn = document.createElement('button');
+		playGameBtn.innerHTML = 'Play Game';
+		playGameBtn.addEventListener('click', (e) => {
+			el.appendChild(createCharacterCard(character, selectPlayer1Function, selectPlayer2Function));
+		});
+	}
+
+
+}
 
 
 /* Character Cards */
 function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Function) {
-    var wrapper = document.createElement('div')
-    var character = document.getElementById('character');
-    var name = document.createElement('h3');
-    var gender = document.createElement('div');
-    var culture = document.createElement('div');
-    var born = document.createElement('div');
-    var died = document.createElement('div');
-    var titles = document.createElement('div');
-    var aliases = document.createElement('div');
+	var wrapper = document.createElement('div')
+	var character = document.getElementById('character');
+	var name = document.createElement('h3');
+	var gender = document.createElement('div');
+	var culture = document.createElement('div');
+	var born = document.createElement('div');
+	var died = document.createElement('div');
+	var titles = document.createElement('div');
+	var aliases = document.createElement('div');
 
-    name.innerHTML = resultItem.name;
-    gender.innerHTML = 'Gender: ' + resultItem.gender;
-    culture.innerHTML = 'Culture: ' + resultItem.culture;
-    born.innerHTML = 'Born: ' + resultItem.born;
-    died.innerHTML = 'Died: ' + resultItem.died;
-    titles.innerHTML = 'Titles: ' + resultItem.titles;
-    aliases.innerHTML = 'Aliases: ' + resultItem.aliases;
+	name.innerHTML = resultItem.name;
+	gender.innerHTML = 'Gender: ' + resultItem.gender;
+	culture.innerHTML = 'Culture: ' + resultItem.culture;
+	born.innerHTML = 'Born: ' + resultItem.born;
+	died.innerHTML = 'Died: ' + resultItem.died;
+	titles.innerHTML = 'Titles: ' + resultItem.titles;
+	aliases.innerHTML = 'Aliases: ' + resultItem.aliases;
 
-    wrapper.className = 'characterCard';
-    wrapper.appendChild(name);
-    wrapper.appendChild(gender);
-    wrapper.appendChild(culture);
-    wrapper.appendChild(born);
-    wrapper.appendChild(died);
-    wrapper.appendChild(titles);
-    wrapper.appendChild(aliases);
+	wrapper.className = 'characterCard';
+	wrapper.appendChild(name);
+	wrapper.appendChild(gender);
+	wrapper.appendChild(culture);
+	wrapper.appendChild(born);
+	wrapper.appendChild(died);
+	wrapper.appendChild(titles);
+	wrapper.appendChild(aliases);
 
-    var player1Button = document.createElement('button')
-    var player2Button = document.createElement('button')
-    player1Button.addEventListener('click', (e) => selectPlayer1Function(resultItem))
-    player1Button.innerText = 'Select as player 1';
-    player2Button.addEventListener('click', (e) => selectPlayer2Function(resultItem))
-    player2Button.innerText = 'Select as player 2';
-    wrapper.appendChild(player1Button);
-    wrapper.appendChild(player2Button);
+	var player1Button = document.createElement('button')
+	var player2Button = document.createElement('button')
+	player1Button.addEventListener('click', (e) => selectPlayer1Function(resultItem))
+	player1Button.innerText = 'Select as player 1';
+	player2Button.addEventListener('click', (e) => selectPlayer2Function(resultItem))
+	player2Button.innerText = 'Select as player 2';
+	wrapper.appendChild(player1Button);
+	wrapper.appendChild(player2Button);
 
-    return wrapper;
-  }
+	return wrapper;
+}
