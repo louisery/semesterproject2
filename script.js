@@ -66,6 +66,7 @@ function renderCharacterSelect(state) {
 			el.appendChild(createCharacterCard(character, selectPlayer1Function, selectPlayer2Function));
 		});
 	}
+	}
 
 
 	function renderGame(state) {
@@ -114,6 +115,7 @@ function renderCharacterSelect(state) {
 
 	}
 
+	// Render options, which page to appear
 	function render(state) {
 		if (state.gameStage === 'LOADING') {
 			renderLoading(state);
@@ -133,7 +135,53 @@ function renderCharacterSelect(state) {
 		render(state);
 	}
 
-}
+	// Dice
+	function rollDice() {
+		return Math.floor(Math.random() * 6) + 1;
+	}
+
+	// Move according to dice roll
+	function rollDiceAndMove() {
+		state.lastDiceRoll = rollDice();
+
+		if (state.nextPlayer === 'player1') {
+			state.posPlayer1 += state.lastDiceRoll;
+
+			//If the value is not equal to undefined it's a trap
+			if (state.traps[state.posPlayer1] !== undefined) {
+				console.log(state.traps[state.posPlayer1].trapInfo);
+				state.posPlayer1 -= state.traps[state.posPlayer1].backwardsValue
+			}
+			//If player1 has reached the max position(30) the Finale page appear
+			if (state.posPlayer1 >= state.maxPosition) {
+				state.gameStage = 'FINALE';
+			}
+			//If dice shows a number less than 6 it is player2's turn
+			if (state.lastDiceRoll < 6) {
+				state.nextPlayer = 'player2'
+			} else {
+				state.posPlayer2 += state.lastDiceRoll;
+
+				if (state.traps[state.posPlayer2] !== undefined) {
+					console.log(state.traps[state.posPlayer2].trapInfo);
+					state.posPlayer2 -= state.traps[state.posPlayer2].backwardsValue
+				}
+
+				if (state.posPlayer2 >= state.maxPosition) {
+					state.gameStage = 'FINALE';
+				}
+				if (state.lastDiceRoll < 6) {
+					state.nextPlayer = 'player1';
+				}
+			}
+
+			render(state);
+
+
+		}
+	}
+
+
 
 
 // Character Cards
