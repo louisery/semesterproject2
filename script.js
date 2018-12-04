@@ -97,6 +97,42 @@ function renderCharacterSelect(state) {
 		}
 	}
 
+	// Finale page
+	function renderFinale(state) {
+		let el = document.getElementById('game');
+		el.innerHTML = '';
+
+		let winnerText = '';
+		if (state.posPlayer1 > state.posPlayer2) {
+			winnerText = 'Congratulations Player 1';
+		} else {
+			winnerText = 'Congratulations Player 2';
+		}
+
+		el.innerHTML = 'Somebody won';
+		el.append('<h2>' + winnerText + '</h2>');
+
+	}
+
+	function render(state) {
+		if (state.gameStage === 'LOADING') {
+			renderLoading(state);
+		} else if (state.gameStage === 'CHARACTER_SELECT') {
+			renderCharacterSelect(state);
+		} else if (state.gameStage === 'GAME') {
+			renderGame(state);
+		} else if (state.gameStage === 'FINALE') {
+			renderFinale(state);
+		}
+	}
+
+
+	function game() {
+		state = init();
+
+		render(state);
+	}
+
 }
 
 
