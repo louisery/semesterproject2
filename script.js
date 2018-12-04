@@ -52,9 +52,13 @@ function renderCharacterSelect(state) {
 
 	let selectPlayer1Function = (item) => { state.infoPlayer1 = item; render (state) }
 	let selectPlayer2Function = (item) => { state.infoPlayer2 = item; render (state) }
+	let startGameFunction = () => { state.gameStage = 'GAME'; render(state); }
 
 	let p1label = document.createElement('div');
 	let p2label = document.createElement('div');
+
+	p1label.innerHTML = "Player 1: " + state.infoPlayer1.name;
+	p2label.innerHTML = "Player 2: " + state.infoPlayer2.name;
 	el.appendChild(p1label);
 	el.appendChild(p2label);
 
@@ -63,7 +67,7 @@ function renderCharacterSelect(state) {
 		let playGameBtn = document.createElement('button');
 		playGameBtn.innerHTML = 'Play Game';
 		playGameBtn.addEventListener('click', (e) => startGameFunction());
-			el.appendChild(playGameBtn);
+		el.appendChild(playGameBtn);
 	}
 
 	state.availableCharacters.forEach(character => {
@@ -144,6 +148,7 @@ function render(state) {
 	} else if (state.gameStage === 'FINALE') {
 		renderFinale(state);
 	}
+	console.log(state);
 }
 
 
@@ -154,8 +159,23 @@ function game() {
 }
 
 // Dice
+var dice = {
+	sides: 6,
+	roll: function() {
+		var randomNumber = Math.floor(Math.random() * 6) + 1;
+		return randomNumber;
+	}
+}
+
+function showNumber(number) {
+	var diceRoller = document.getElementById("diceRoller");
+	diceRoller.innerHTML = number;
+}
+
 function rollDice() {
-	return Math.floor(Math.random() * 6) + 1;
+	var result = dice.roll();
+	showNumber(result);
+	return result;
 }
 
 // Move according to dice roll
@@ -174,29 +194,28 @@ function rollDiceAndMove() {
 		if (state.posPlayer1 >= state.maxPosition) {
 			state.gameStage = 'FINALE';
 		}
-		//If dice shows a number less than 6 it is player2's turn
+		//If the dice shows a number less than 6 it is player2's turn
 		if (state.lastDiceRoll < 6) {
 			state.nextPlayer = 'player2'
-		} else {
-			state.posPlayer2 += state.lastDiceRoll;
+		}
+	} else {
+		state.posPlayer2 += state.lastDiceRoll;
 
-			if (state.traps[state.posPlayer2] !== undefined) {
-				console.log(state.traps[state.posPlayer2].trapInfo);
-				state.posPlayer2 -= state.traps[state.posPlayer2].backwardsValue
-			}
-
-			if (state.posPlayer2 >= state.maxPosition) {
-				state.gameStage = 'FINALE';
-			}
-			if (state.lastDiceRoll < 6) {
-				state.nextPlayer = 'player1';
-			}
+		if (state.traps[state.posPlayer2] !== undefined) {
+			console.log(state.traps[state.posPlayer2].trapInfo);
+			state.posPlayer2 -= state.traps[state.posPlayer2].backwardsValue
 		}
 
-		render(state);
-
-
+		if (state.posPlayer2 >= state.maxPosition) {
+			state.gameStage = 'FINALE';
+		}
+		if (state.lastDiceRoll < 6) {
+			state.nextPlayer = 'player1';
+		}
 	}
+
+	render(state);
+
 }
 
 // Character Cards
