@@ -47,6 +47,7 @@ function renderLoading(state) {
 function renderCharacterSelect(state) {
 	let el = document.getElementById('game');
 	el.innerHTML = '';
+	el.innerHTML = '<h2>Select two characters:</h2>';
 
 	let selectPlayer1Function = (item) => { state.infoPlayer1 = item; render (state) }
 	let selectPlayer2Function = (item) => { state.infoPlayer2 = item; render (state) }
@@ -63,6 +64,7 @@ function renderCharacterSelect(state) {
 	// Play Game Button
 	if (Object.keys(state.infoPlayer1).length != 0 && Object.keys(state.infoPlayer2).length != 0) {
 		let playGameBtn = document.createElement('button');
+		playGameBtn.className = 'btn_game';
 		playGameBtn.innerHTML = 'Play Game';
 		playGameBtn.addEventListener('click', (e) => startGameFunction());
 		el.appendChild(playGameBtn);
@@ -84,6 +86,16 @@ function renderGame(state) {
 	canvas.className = 'gameBoard';
 	let ctx = canvas.getContext('2d');
 
+	let img = new Image(); // Create new img element
+	img.addEventListener('load', function() {
+	}, false);
+	img.src = 'images/token_crown.png';
+
+	let img2 = new Image(); // Create new img element
+	img2.addEventListener('load', function() {
+	}, false);
+	img2.src = 'images/token_castle.png';
+
 	// Draw canvas game board
 	for (var x = 0; x < 6; x++) {
 		for (var y = 0; y < 5; y++) {
@@ -104,29 +116,14 @@ function renderGame(state) {
 			}
 			if (boardNumber === state.posPlayer1) {
 				// Player 1
-				ctx.fillStyle = 'green';
-				ctx.fillRect(120 * x, 120 * y, 60, 60);
+				ctx.drawImage(img, 120 * x, 120 * y, 70, 70);
 			}
 			if (boardNumber === state.posPlayer2) {
 				// Player 2
-				ctx.fillStyle = 'blue';
-				ctx.fillRect(120 * x, (120 * y) + 60, 60, 60);
+				ctx.drawImage(img2, 120 * x, 120 * y, 70, 70);
 			}
 		}
 	}
-
-	/*
-	window.onload = function() {
-	    var c = document.getElementById("myCanvas");
-	    var ctx = c.getContext("2d");
-
-			window.onload = function() {
-			var img = document.getElementById('token_castle');
-			ctx.drawImage(img, 60, 60);
-			}
-	}
-	*/
-
 	el.appendChild(canvas);
 }
 
@@ -142,9 +139,8 @@ function renderFinale(state) {
 		winnerText = 'Congratulations Player 2';
 	}
 
-	el.innerHTML = 'Somebody won';
-	el.append('<h2>' + winnerText + '</h2>');
-
+	el.innerHTML = '<h2>You have defeated the white walkers</h2>';
+	el.append(winnerText);
 }
 
 // Render options, which page to appear
@@ -262,8 +258,10 @@ function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Fun
 	var player2Button = document.createElement('button')
 	player1Button.addEventListener('click', (e) => selectPlayer1Function(resultItem))
 	player1Button.innerText = 'Select as player 1';
+	player1Button.className = 'btn_player';
 	player2Button.addEventListener('click', (e) => selectPlayer2Function(resultItem))
 	player2Button.innerText = 'Select as player 2';
+	player2Button.className = 'btn_player';
 	wrapper.appendChild(player1Button);
 	wrapper.appendChild(player2Button);
 
