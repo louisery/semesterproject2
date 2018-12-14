@@ -15,7 +15,7 @@ function init() {
 		traps: {
 			5: { trapInfo: 'You lost in a sword fight against Brienne of Tarth, you went back two spaces.', backwardsValue: 2 },
 			10: { trapInfo: 'The Mountain is blocking the road ahead, you went back three spaces.', backwardsValue: 3 },
-			15: { trapInfo: 'You did not manage to solve Lord Varys’ riddle, you went back two spaces.', backwardsValue: 2 },
+			15: { trapInfo: 'You did not manage to solve Lord letys’ riddle, you went back two spaces.', backwardsValue: 2 },
 			20: { trapInfo: 'You trusted Little Finger, that was not smart, you went back four spaces.', backwardsValue: 4 },
 			25: { trapInfo: 'Grand Maester Pycelle poisoned you, you went back three spaces.', backwardsValue: 3 }
 		},
@@ -113,37 +113,45 @@ function renderGame(state) {
 
 	// Canvas
 	let canvas = document.createElement('canvas');
-	canvas.width = 630;
-	canvas.height = 525;
+	canvas.width = 570;
+	canvas.height = 475;
 	canvas.className = 'gameBoard';
 	let ctx = canvas.getContext('2d');
 
 	// Draw game board
-	for (var x = 0; x < 6; x++) {
-		for (var y = 0; y < 5; y++) {
+	for (let x = 0; x < 6; x++) {
+		for (let y = 0; y < 5; y++) {
 			// Every other square is gray/dimgray
 			if (x % 2 === y % 2) {
 				ctx.fillStyle = 'gray';
-				ctx.fillRect(105 * x, 105 * y, 105, 105);
+				ctx.fillRect(95 * x, 95 * y, 95, 95);
 			} else {
 				ctx.fillStyle = 'dimgray';
-				ctx.fillRect(105 * x, 105 * y, 105, 105);
+				ctx.fillRect(95 * x, 95 * y, 95, 95);
 			}
 
 			let boardNumber = y * 6 + (x + 1);
 			if (state.traps[boardNumber] !== undefined) {
 				// Traps
 				ctx.fillStyle = '#B21917';
-				ctx.fillRect(105 * x, 105 * y, 105, 105);
+				ctx.fillRect(95 * x, 95 * y, 95, 95);
+				ctx.fillStyle = 'white';
+				ctx.font = '40px priori-sans';
+				ctx.textAlign = 'center';
+				ctx.fillText('Trap', 427,95 / 2);
+				ctx.fillText('Trap', 332,142);
+				ctx.fillText('Trap', 237,237);
+				ctx.fillText('Trap', 142,332);
+				ctx.fillText('Trap', 47,427);
 			}
 			// Tokens
 			if (boardNumber === state.posPlayer1) {
 				// Player 1
-				ctx.drawImage(img, 105 * x, 105 * y, 105, 105);
+				ctx.drawImage(img, 95 * x, 95 * y, 95, 95);
 			}
 			if (boardNumber === state.posPlayer2) {
 				// Player 2
-				ctx.drawImage(img2, 105 * x, 105 * y, 105, 105);
+				ctx.drawImage(img2, 95 * x, 95 * y, 95, 95);
 			}
 		}
 	}
@@ -161,13 +169,13 @@ function renderGame(state) {
 		if (state.lastDiceRoll === 6) {
 			diceLabel.innerText = diceLabel.innerText + ' - Roll again!';
 		}
-		
+
 		el.appendChild(diceLabel);
 	}
 
 	// Create roll dice button
 	let diceBtn = document.createElement('button');
-	diceBtn.className = 'expand';
+	diceBtn.className = 'btn_dice expand';
 	diceBtn.innerText = 'Roll Dice';
 	diceBtn.addEventListener('click', rollDiceAndMove);
 
@@ -181,7 +189,7 @@ function renderFinale(state) {
 
 	// Heading with typewriter effect
 	let typewriterDiv = document.createElement('div');
-	typewriterDiv.innerHTML = '<h2>You defeated the white walkers!</h2>';
+	typewriterDiv.innerHTML = '<h2>You claimed the throne!</h2>';
 	typewriterDiv.className = 'typewriter';
 
 	el.appendChild(typewriterDiv);
@@ -189,14 +197,14 @@ function renderFinale(state) {
 	// Canvas
 	let canvas = document.createElement('canvas');
 	canvas.width = window.innerWidth;
-	canvas.height = 500;
+	canvas.height = 400;
 	let ctx = canvas.getContext('2d');
 
 	el.appendChild(canvas);
 
 	// Draw bouncing balls
 	let width = window.innerWidth;
-	let height = 500;
+	let height = 400;
 	let balls = [
 		{ x: 0, y: 0, dx: 3, dy: 7, r: 10 },
 		{ x: 90, y: 90, dx: 7, dy: 3, r: 15 },
@@ -214,22 +222,23 @@ function renderFinale(state) {
 	let ballPath = (ball, ctx) => {
 		ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2, true);
 		ctx.moveTo(ball.x + ball.y, ball.r);
-
 	}
+
 	let moveBall = (ball) => {
 		if (ball.x < 0 || ball.x > width) ball.dx = -ball.dx;
 		if (ball.y < 0 || ball.y > height) ball.dy = -ball.dy;
 		ball.x += ball.dx;
 		ball.y += ball.dy;
 	}
+
 	let onMove = () => {
 		ctx.clearRect(0, 0, width, height);
 		ctx.font = '3.5vw mason-serif';
 		ctx.textAlign = 'center';
-		ctx.fillText('Congratulations ' + fetchLeadingPlayer(state).name + ' !!!', window.innerWidth / 2, window.innerHeight / 2);
+		ctx.fillText('Congratulations ' + fetchLeadingPlayer(state).name + ' !', window.innerWidth / 2, 400 / 2);
 		ctx.fillStyle = '#FFFF19';
 		ctx.beginPath();
-		var i;
+		let i;
 		for (i = 0; i < balls.length; i++) {
 			moveBall(balls[i]);
 			ballPath(balls[i], ctx);
@@ -240,9 +249,8 @@ function renderFinale(state) {
 	setInterval(onMove, 15);
 
 	// Extra text with fun remark
-	var funText = document.createTextNode("P.S. Winter is still coming");
+	let funText = document.createTextNode("P.S. Winter is still coming");
 	el.appendChild(funText);
-
 }
 
 // Render options, which page to appear
@@ -257,7 +265,6 @@ function render(state) {
 		renderFinale(state);
 	}
 }
-
 
 function game() {
 	state = init();
@@ -281,7 +288,7 @@ function rollDiceAndMove() {
 		if (state.traps[state.posPlayer1] !== undefined) {
 			// Replace alert with modal
 			(function() {
-				var proxied = window.alert;
+				let proxied = window.alert;
 				window.alert = function() {
 					$("#trapModal .modal-body").text(arguments[0]);
 					$("#trapModal").modal('show');
@@ -301,10 +308,9 @@ function rollDiceAndMove() {
 		}
 	} else {
 		state.posPlayer2 += state.lastDiceRoll;
-
 		if (state.traps[state.posPlayer2] !== undefined) {
 			(function() {
-				var proxied = window.alert;
+				let proxied = window.alert;
 				window.alert = function() {
 					$('#trapModal .modal-body').text(arguments[0]);
 					$('#trapModal').modal('show');
@@ -328,14 +334,14 @@ function rollDiceAndMove() {
 
 // Character Cards
 function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Function) {
-	var wrapper = document.createElement('div')
-	var character = document.getElementById('character');
-	var name = document.createElement('h3');
-	var gender = document.createElement('div');
-	var culture = document.createElement('div');
-	var born = document.createElement('div');
-	var titles = document.createElement('div');
-	var aliases = document.createElement('div');
+	let wrapper = document.createElement('div')
+	let character = document.getElementById('character');
+	let name = document.createElement('h3');
+	let gender = document.createElement('div');
+	let culture = document.createElement('div');
+	let born = document.createElement('div');
+	let titles = document.createElement('div');
+	let aliases = document.createElement('div');
 
 	name.innerHTML = resultItem.name;
 	gender.innerHTML = 'Gender: ' + resultItem.gender;
@@ -352,8 +358,8 @@ function createCharacterCard(resultItem, selectPlayer1Function, selectPlayer2Fun
 	wrapper.appendChild(titles);
 	wrapper.appendChild(aliases);
 
-	var player1Button = document.createElement('button')
-	var player2Button = document.createElement('button')
+	let player1Button = document.createElement('button')
+	let player2Button = document.createElement('button')
 	player1Button.addEventListener('click', (e) => selectPlayer1Function(resultItem))
 	player1Button.innerText = 'Select as player 1';
 	player1Button.className = 'expand';
