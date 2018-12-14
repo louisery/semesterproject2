@@ -162,9 +162,17 @@ button {
 
 /* Footer */
 
-.footer-copyright {
+.footer {
   background-color: #195977;  /* #0c2a38 */
   color: #ffffff;
   padding: 5px;
   margin-top: 50px;
+}
+
+.footer a {
+  color: #FFFF19;
+}
+
+.footer a:hover {
+  text-decoration: underline;
 }
