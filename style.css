@@ -16,7 +16,9 @@ body {
   margin: 0 auto;
 }
 
+
 /* Navbar */
+
 .navbar-dark {
   background-color: #195977 !important;
 }
@@ -62,7 +64,9 @@ h2 {
   font-size: 1.3em;
 }
 
+
 /* Character cards */
+
 .characterCard {
   margin: 10px;
   padding: 15px;
@@ -73,6 +77,7 @@ h2 {
   display: inline-grid;
   text-align: left;
 }
+
 
 /* Buttons */
 
@@ -102,6 +107,7 @@ button {
 /* Button play game */
 .btn_play {
   font-size: 1em;
+  margin-top: 10px;
 }
 
 .btn_play a {
@@ -109,38 +115,39 @@ button {
   color: #000000;
 }
 
-
-/* Footer */
-.footer-copyright {
-  background-color: #195977;  /* #0c2a38 */
-  color: #ffffff;
-  padding: 5px;
-  margin-top: 50px;
+/* Button dice */
+.btn_dice {
+  font-size: 0.7em;
 }
 
+
 /* Modal alert */
+
 .modal-header, .modal-footer {
   display: block;
 }
 
-/* Typewriter */
-.typewriter h2 {
-  padding-top: 20px;
-  color: #fff;
-  font-family: mason-serif;
-  font-size: 3vw;
-  overflow: hidden;
-  white-space: nowrap;
-  margin: 0 auto;
-  letter-spacing: .12em;
-  animation: typing 4.5s steps(30, end);
-}
+
+/* CSS animation - typewriter */
 
 .typewriterDiv {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.typewriter h2 {
+  padding-top: 20px;
+  color: #fff;
+  font-family: mason-serif;
+  font-size: 3.8vw;
+  color: #FFFF19;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .12em;
+  animation: typing 4.5s steps(30, end);
 }
 
 @keyframes typing {
@@ -150,4 +157,14 @@ button {
   to {
     width: 100%;
   }
+}
+
+
+/* Footer */
+
+.footer-copyright {
+  background-color: #195977;  /* #0c2a38 */
+  color: #ffffff;
+  padding: 5px;
+  margin-top: 50px;
 }
